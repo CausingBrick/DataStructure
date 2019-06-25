@@ -32,3 +32,18 @@ func BubbleSort(a []int) {
 		}
 	}
 }
+
+// BubbleSortF flag 冒泡排序
+// 改进优化BubbleSort
+func BubbleSortF(a []int) {
+	flag := true
+	for flag {
+		flag = false
+		for i := 0; i < len(a)-1; i++ {
+			if a[i] > a[i+1] {
+				a[i], a[i+1] = a[i+1], a[i]
+				flag = true
+			}
+		}
+	}
+}

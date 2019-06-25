@@ -29,3 +29,12 @@ func TestBubbleSort(t *testing.T) {
 		t.Errorf("InsertionSort %v, In fact: %v", unsort, sorted)
 	}
 }
+
+func TestBubbleSortF(t *testing.T) {
+	sorted := make([]int, len(unsort))
+	copy(sorted, unsort)
+	BubbleSortF(sorted)
+	if !isSorted(sorted) {
+		t.Errorf("InsertionSort %v, In fact: %v", unsort, sorted)
+	}
+}
