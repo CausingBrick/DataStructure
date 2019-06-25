@@ -17,3 +17,16 @@ func TestInsertionSort(t *testing.T) {
 		t.Errorf("InsertionSort %v, fact: %v", unsort, sorted)
 	}
 }
+
+func TestBubbleSort(t *testing.T) {
+	var unsort []int
+
+	for i := 0; i < 200; i++ {
+		unsort = append(unsort, md.Int())
+	}
+	sorted := unsort
+	BubbleSort(sorted)
+	if !isSorted(sorted) {
+		t.Errorf("InsertionSort %v, fact: %v", unsort, sorted)
+	}
+}

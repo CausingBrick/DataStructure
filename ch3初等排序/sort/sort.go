@@ -1,7 +1,7 @@
 package sort
 
 // InsertionSort 插入排序
-// a为待排序slice的地址 ,n为长度
+// a为待排序slice的地址
 func InsertionSort(a []int) {
 	var j, val int
 	for i := 1; i < len(a); i++ {
@@ -20,4 +20,15 @@ func isSorted(a []int) bool {
 		}
 	}
 	return true
+}
+
+// BubbleSort 冒泡排序
+func BubbleSort(a []int) {
+	for i := 0; i < len(a); i++ {
+		for j := 0; j < len(a)-i-1; j++ {
+			if a[j] > a[j+1] {
+				a[j], a[j+1] = a[j+1], a[j]
+			}
+		}
+	}
 }
