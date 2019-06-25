@@ -5,28 +5,27 @@ import (
 	"testing"
 )
 
-func TestInsertionSort(t *testing.T) {
-	var unsort []int
+var unsort []int
 
+func init() {
 	for i := 0; i < 200; i++ {
 		unsort = append(unsort, md.Int())
 	}
-	sorted := unsort
+}
+func TestInsertionSort(t *testing.T) {
+	sorted := make([]int, len(unsort))
+	copy(sorted, unsort)
 	InsertionSort(sorted)
 	if !isSorted(sorted) {
-		t.Errorf("InsertionSort %v, fact: %v", unsort, sorted)
+		t.Errorf("InsertionSort %v, In fact: %v", unsort, sorted)
 	}
 }
 
 func TestBubbleSort(t *testing.T) {
-	var unsort []int
-
-	for i := 0; i < 200; i++ {
-		unsort = append(unsort, md.Int())
-	}
-	sorted := unsort
+	sorted := make([]int, len(unsort))
+	copy(sorted, unsort)
 	BubbleSort(sorted)
 	if !isSorted(sorted) {
-		t.Errorf("InsertionSort %v, fact: %v", unsort, sorted)
+		t.Errorf("InsertionSort %v, In fact: %v", unsort, sorted)
 	}
 }
