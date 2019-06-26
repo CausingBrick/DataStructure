@@ -47,3 +47,16 @@ func BubbleSortF(a []int) {
 		}
 	}
 }
+
+// SelectionSort 选择排序
+func SelectionSort(a []int) {
+	for i := 0; i < len(a); i++ {
+		min := i
+		for j := i; j < len(a); j++ {
+			if a[min] > a[j] {
+				min = j
+			}
+		}
+		a[min], a[i] = a[i], a[min]
+	}
+}
