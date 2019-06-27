@@ -1,5 +1,14 @@
 package sort
 
+func isSorted(a []int) bool {
+	for i := 0; i < len(a)-1; i++ {
+		if a[i] > a[i+1] {
+			return false
+		}
+	}
+	return true
+}
+
 // InsertionSort 插入排序
 // a为待排序slice的地址
 func InsertionSort(a []int) {
@@ -11,15 +20,6 @@ func InsertionSort(a []int) {
 		}
 		a[j+1] = val
 	}
-}
-
-func isSorted(a []int) bool {
-	for i := 0; i < len(a)-1; i++ {
-		if a[i] > a[i+1] {
-			return false
-		}
-	}
-	return true
 }
 
 // BubbleSort 冒泡排序
@@ -58,5 +58,26 @@ func SelectionSort(a []int) {
 			}
 		}
 		a[min], a[i] = a[i], a[min]
+	}
+}
+
+// ShellSort 希尔排序
+// gap 增量为3*gap+1
+func ShellSort(a []int) {
+	// Generate incremental series for  3*i+1
+	var gap = []int{1}
+	for i := 0; 3*gap[i]+1 < len(a); i++ {
+		gap = append(gap, 3*gap[i]+1)
+	}
+
+	for g := len(gap) - 1; g >= 0 && gap[g] > 0; g-- {
+		for i := gap[g]; i < len(a); i++ {
+			temp := a[i]
+			var j int
+			for j = i - gap[g]; j >= 0 && a[j] > temp; j -= gap[g] {
+				a[j+gap[g]] = a[j]
+			}
+			a[j+gap[g]] = temp
+		}
 	}
 }

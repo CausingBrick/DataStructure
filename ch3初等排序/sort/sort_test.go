@@ -47,3 +47,13 @@ func TestSelectionSort(t *testing.T) {
 		t.Errorf("InsertionSort %v, In fact: %v", unsort, sorted)
 	}
 }
+
+func TestShellSort(t *testing.T) {
+	sorted := make([]int, len(unsort))
+	copy(sorted, unsort)
+	// sorted := []int{3, 5, 1, 2, 9, 7, 4, 8, 6}
+	ShellSort(sorted)
+	if !isSorted(sorted) {
+		t.Errorf("InsertionSort err: In fact: %v", sorted)
+	}
+}
