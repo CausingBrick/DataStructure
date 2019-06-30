@@ -1,28 +1,29 @@
+// Package stack Encapsulate a type int stack made up by slices
 package stack
-
-import (
-	"fmt"
-)
 
 // Stack is the common type for stack.
 type Stack struct {
-	// len int
-	// cap int
-	stack []int
-	point int
+	stack []interface{}
 }
 
-// Initialize stack.
-func (s *Stack) Initialize(cap int) {
-	s.stack = make([]int, 0, cap)
-	s.point = 0
+// Pop return the top value of stack.
+// The length of stack will decrease.
+func (s *Stack) Pop() interface{} {
+	// fmt.Println("len:", len(s.stack))
+	popVal := s.stack[len(s.stack)-1]
+	temp := make([]interface{}, len(s.stack)-1)
+	copy(temp, s.stack)
+	s.stack = temp
+	return popVal
 }
 
-func (s *Stack) Pop(x int) {
-	s.stack[s.point] = x
-	if s.point < cap(s.stack) {
-		s.point++
-	} else {
-		fmt.Errorf("Full of stack")
-	}
+// Push will increase one unit of stack.
+// The x will be the top of stack.
+func (s *Stack) Push(x interface{}) {
+	s.stack = append(s.stack, x)
+}
+
+// IsEmpty return the status for stack if it is empty.
+func (s *Stack) IsEmpty() bool {
+	return len(s.stack) == 0
 }
