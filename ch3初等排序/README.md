@@ -124,29 +124,28 @@
 
   ```
   //希尔排序在针对插入排序的优点进行了优化, 希尔排序使用增量间隔使得数列的有序性不断提高.
-  
-//增量为g的插入排序算法
-  insetionSortWithGap(A,g)
-  	for i form g to A.lenth
-  		temp = A[g]
-  		j = i -g
-  		while(j>0 && a[j] > temp)
-  			a[j+g] = g[j]
-  			j = j - g
-  		a[j+g] = temp
-  		
-  //生成对应A长度的增量数列
-  createG(A.lenth)
-  	...
-  	返回数列gap
-  	
-  //希尔排序
-  ShellSort
-  	for i form gap.lenth to 0
-  		insetionSortWithGap(A, gap[i])
-  	
+  //增量为g的插入排序算法
+    insetionSortWithGap(A,g)
+    	for i form g to A.lenth
+    		temp = A[g]
+    		j = i -g
+    		while(j>0 && a[j] > temp)
+    			a[j+g] = g[j]
+    			j = j - g
+    		a[j+g] = temp
+    		
+    //生成对应A长度的增量数列
+    createG(A.lenth)
+    	...
+    	返回数列gap
+    	
+    //希尔排序
+    ShellSort
+    	for i form gap.lenth to 0
+    		insetionSortWithGap(A, gap[i])
   ```
-  
+
+
 * 复杂度分析:
 
   > 希尔排序的算法复杂度与增量序列的选取有密切关系,增量`g`的选择也有很多方法, 举例当$g_{n+1}=3g_n+1$时,算法复杂度基本维持在$O(N^{1.25})$.
@@ -160,3 +159,4 @@
 ## 心得总结
 
 * 本章的在学习的时候, 先看明白了算法的思想然后使用go语言实现算法, 实现完测试完毕之后,在使用伪代码描述一遍算法, 接着分析算法的复杂度以及适用性.
+
