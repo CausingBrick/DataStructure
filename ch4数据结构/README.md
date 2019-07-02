@@ -99,3 +99,25 @@
 
    * 往链表中插入元素时, 只需要更爱几个指针的指向,复杂度为O(1)​.
    * 搜索节点需要从节点的开头搜索, 复杂度为$O(N)$.
+
+## 4.5 标准库的数据结构
+
+### 	4.5.1 C++标准库
+
+​	C++库以提供"模板"为主. 所谓模板,是指不必预先制定类型的函数或类. C++的标准库的核心为`STL`, 即`Standard Template Library`.
+
+* [STL数据结构代码示例](ch4数据结构/STL)
+
+### 4.5.2 satck
+
+```c++
+stack<string> S;
+
+S.push("monkey");
+cout << S.top() << endl;
+cout << S.empty() << endl;
+cout <<  S.size() << endl;
+```
+
+
+
