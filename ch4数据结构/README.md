@@ -241,3 +241,9 @@ C++中 vector 的 clear( ) 只是清空 vector ，并不会清空开的内存。
 > Lst1.splice() 合并两个list 
 > Lst1.swap() 交换两个list 
 > Lst1.unique() 删除list中重复的元素
+
+
+
+##  4.6 举例应用-计算面积
+
+![1563348013979](/home/causingbrick/workspace/go/src/DataStructre/ch4数据结构/IMG/img.png)
