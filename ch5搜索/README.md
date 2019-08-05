@@ -29,7 +29,7 @@
 * 算法描述:
 
   ```
-  linearSearcn ()
+  linearSearcn (key, A)
   	for i from 0 to n-1
   		if A[i] == key
            return i
@@ -39,7 +39,7 @@
   将上面的算法引入标记之后可以将效率提高数倍:
 
   ```
-  linearSearch ()
+  linearSearch (key, A)
   	i = 0
   	A[n] = key
   	while A[i] != key 
@@ -57,7 +57,27 @@
 
   ![1563412211146](/home/causingbrick/workspace/go/src/DataStructre/ch5搜索/README.assets/1563412211146.png)
 
+##  5.3 二分搜索 
 
+1. 问题描述: 对于两个数列`sequence1`,`sequnece2`,找出他们并集元素的个数.
 
+2. 算法描述:
 
+   ```
+   //先决条件: seq为升序
+   binarySearch(key, seq) 
+   	left = 0
+   	right = seq.length
+   	while left < right
+   		mid = (left + right)/2
+   		if key = seq[mid] 
+   			return mid
+   		else if key < mid 
+   			right = mid
+   		else
+   			left = mid
+   	return NOT_FOUND
+   ```
+
+3. 算法实现
 
