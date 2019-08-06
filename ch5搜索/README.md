@@ -81,3 +81,78 @@
 
 3. 算法实现
 
+   * [binarySearch](binary/binary.go)
+
+
+
+##   5.4 散列法
+
+1. 相关定义:
+
+   * 散列表: 散列表是一种数据结构, 由一个存储元素的结构以及决定元素位置的函数组成.
+   * 散列函数(哈希函数`Hash`): 根据给定的关键字计算出元素在散列表中位置的函数.
+   * 冲突: 哈希函数计算出来的位置发生了重复就为冲突.
+
+2. 算法描述:
+
+   * 散列表的简单实现:
+
+     ```
+     insert(data)
+     	T[h(data.key)] = data
+     	
+     search(data)
+     	return T[h(data.key)]
+     ```
+
+     `h(k)`是根据$k$值求数组$T$的下标的函数,为散列函数.比如
+     
+     $h(k) = k\ mod\ m$
+     
+     就是一种散列函数, 指 $k除以m所得的余数$.
+     
+     * 开放地址法是解决单一函数过于简单导致冲突的常用手段之一, 如下是双散列结构中使用的开方地址法.
+     
+       $H(k) = h(k,i) = (h_1(k) + i \times h_2(k))$
+     
+       $i$是冲突之后计算下一次散列的次数
+     
+   * 使用开放地址法的散列法:
+   
+     ```
+     h1(key) 
+     	return k mod m
+     	
+     h2(key)
+     	return 1 + key mod m
+     	
+     h(key, i)
+     	return (h1(key) + i * h2(key)) mod m
+     
+     insert(T, key)
+     	i = 0
+     	while true
+     		j = h(key, i)
+     		if T[i] == NIL
+     			T[j] = key
+     			return j
+     		else 
+     			j++
+     search(T, key)
+     	i = 0
+     	while true 
+     		j = h(key, i)
+     		if T[j] == key
+     			return j
+     		else if T[j] == NIL || i >= m
+     			return NIL
+     		else 
+     			i++
+     ```
+   
+   * 散列函数根据不同用途会有不一样的算法, 上述用的是求余数法.
+   
+3. 算法实现:
+
+   * [hash](hash/hash.go)
+
