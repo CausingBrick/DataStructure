@@ -1,49 +1,23 @@
 package hash
 
 import (
-	"fmt"
 	"testing"
 )
 
-func TestHash(t *testing.T) {
-	seq1 := [10]int{23, 12, 22, 4, 28, 7, 6, 9, 11, 3}
-	var seq2 [10]bool
-	for i := 0; i < 10; i++ {
-		x := 1
-		j := 0
-		for true {
-			j = Hash(seq1[i], x, len(seq2)) - 1
-			fmt.Println(j, len(seq2))
-			if x > len(seq2) {
-				t.Fatal("get value from Hash function error.")
-			} else if seq2[j] == false {
-				break
-			}
-			x++
-		}
-		seq2[j] = true
+var seq1 = []int{23, 12, 22, 4, 28, 7, 6, 9, 11}
+var seq2 = make([]int, 10)
+
+func TestInsert(t *testing.T) {
+	for i := 0; i < len(seq1); i++ {
+		Insert(seq2, seq1[i])
 	}
-	for _, val := range seq2 {
-		if !val {
-			t.Error("there are also gap values not filled")
-		}
-	}
+
 }
 
-func SearchTest(t *testing.T) {
-	seq1 := [10]int{23, 12, 22, 4, 28, 7, 6, 9, 11, 3}
-	seq2 := []int{}
-	for i := 0; i < 10; i++ {
-		x := 1
-		j := 0
-		for true {
-			j = Hash(seq1[i], x, len(seq2))
-			if seq2[j] == 0 {
-				break
-			} else if x > len(seq2) {
-				t.Fatal("get value from Hash function error.")
-			}
-			x++
+func TestSearch(t *testing.T) {
+	for i := 1; i < 9; i++ {
+		if seq2[Search(seq2, seq1[i])] == 0 {
+			t.Error("this slice cannot contain 0", seq2)
 		}
 	}
 }
