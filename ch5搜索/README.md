@@ -133,11 +133,11 @@
      	i = 0
      	while true
      		j = h(key, i)
-     		if T[i] == NIL
+     		if T[j] == NIL
      			T[j] = key
      			return j
      		else 
-     			j++
+     			i++
      search(T, key)
      	i = 0
      	while true 
