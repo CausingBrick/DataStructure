@@ -24,7 +24,7 @@
 
 * 问题描述: 
 
-![1563364078115](/home/causingbrick/workspace/go/src/DataStructre/ch5搜索/README.assets/1563364078115.png)
+![1563364078115](/ch5搜索/README.assets/1563364078115.png)
 
 * 算法描述:
 
@@ -55,7 +55,7 @@
 
 * 算法分析:
 
-  ![1563412211146](/home/causingbrick/workspace/go/src/DataStructre/ch5搜索/README.assets/1563412211146.png)
+  ![1563412211146](/ch5搜索/README.assets/1563412211146.png)
 
 ##  5.3 二分搜索 
 

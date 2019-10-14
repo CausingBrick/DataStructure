@@ -246,4 +246,4 @@ C++中 vector 的 clear( ) 只是清空 vector ，并不会清空开的内存。
 
 ##  4.6 举例应用-计算面积
 
-![1563348013979](/home/causingbrick/workspace/go/src/DataStructre/ch4数据结构/IMG/img.png)
+![1563348013979](/ch4数据结构/IMG/img.png)

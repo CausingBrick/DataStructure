@@ -118,7 +118,7 @@
 
 1. 问题描述:
 
-   ![1567412138582](/home/causingbrick/workspace/go/src/DataStructre/ch7高级排序/README.assets/1567412138582.png)
+   ![1567412138582](/ch7高级排序/README.assets/1567412138582.png)
 
 2. 问题分析:
 
@@ -165,24 +165,24 @@
 
 1. 问题描述:
 
-   ![1567516980646](/home/causingbrick/workspace/go/src/DataStructre/ch7高级排序/README.assets/1567516980646.png)
+   ![1567516980646](/ch7高级排序/README.assets/1567516980646.png)
 
 2. 算法分析:
 
-   ![1567517201239](/home/causingbrick/workspace/go/src/DataStructre/ch7高级排序/README.assets/1567517201239.png)
+   ![1567517201239](/ch7高级排序/README.assets/1567517201239.png)
 
-   ![1567517212803](/home/causingbrick/workspace/go/src/DataStructre/ch7高级排序/README.assets/1567517212803.png)
+   ![1567517212803](/ch7高级排序/README.assets/1567517212803.png)
 
-   ![1567517246573](/home/causingbrick/workspace/go/src/DataStructre/ch7高级排序/README.assets/1567517246573.png)
+   ![1567517246573](/ch7高级排序/README.assets/1567517246573.png)
 
 3. 算法描述:
 
    * 借整体最小元素的成本算法:
 
-   ![1567517999649](/home/causingbrick/workspace/go/src/DataStructre/ch7高级排序/README.assets/1567517999649.png)
+   ![1567517999649](/ch7高级排序/README.assets/1567517999649.png)
 
    * 不接元素的最小成本算法:
 
-     ![1567518072526](/home/causingbrick/workspace/go/src/DataStructre/ch7高级排序/README.assets/1567518072526.png)
+     ![1567518072526](/ch7高级排序/README.assets/1567518072526.png)
 
      对两种结果比较取较小值.
