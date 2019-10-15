@@ -10,6 +10,7 @@ factorial(n)
 		return 1
 	return n * factorial(n -1)
 ```
+- [点击查看源码](/ch6递归与分治法/factorial/main.go)
 
 通过求解局部性的小问题来解决原本的问题,这种技巧称为分治法. 实现步骤如下:
 
@@ -33,6 +34,8 @@ findMaximum(A, l, r)
 		x = max(u, v)
 	return x
 ```
+
+- [点击查看源码](/ch6递归与分治法/findMax/main.go)
 
 ##  6.2 穷竭搜索
 
