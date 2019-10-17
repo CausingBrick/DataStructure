@@ -43,24 +43,30 @@ findMaximum(A, l, r)
 
    > 对于长度为n的数列A和整数m, 判断A中任意的几个元素相加是否能得到m. A中每个元素只能用一次 .
 
-2. 算法描述：
+2. 算法分析:   
+对于每个数都有选和两种状态, 在n的值不大的情况下, 可以将选的所有状态列举出来, 算法复杂度为O(N^2).
+	```
+	//列举组合的递归函数
+	makeCombination()
+		for i from 0 to n-1
+			S[i] = 0
+		rec(0)
+		
+	rec(i)
+		if i == n
+			print(S)
+			return
+		rec(i+1)
+		S[i] = 1
+		rec(i+1)
+		S[i] = 0
+	
+	```
+	[点击查看源码](ch6递归与分治法/combination/main.go).  
+	根据以上思路可以做如下算法.
+3. 算法描述：
 
    ```
-   //列举组合的递归函数
-   makeCombination()
-   	for i from 0 to n-1
-   		S[i] = 0
-   	rec(0)
-   	
-   rec(i)
-   	if i == n
-       	print(S)
-       	return
-       rec(i+1)
-       S[i] = 1
-       rec(i+1)
-       S[i] = 0
-   
    //判断是否得出某个整数的递归函数
    solve（i, m)
    	if m == 0
@@ -70,3 +76,5 @@ findMaximum(A, l, r)
    	res = solve(i + 1, m) || solve(i+1, m -A[i])
    	return res
    ```
+	[点击查看源码](ch6递归与分治法/solve/main.go).  
+	用i表示数组的下标, 不断的去找当前数组的值能否构成m的和的一部分, 取能或不能两种情况中的逻辑或的值来作为返回值, 算法复杂度为O(N^2).
