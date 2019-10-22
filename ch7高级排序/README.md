@@ -149,29 +149,27 @@
       		return 0
       		
       merge(A, left, mid, right)
-      	n1 = mid -left 
-      	n2 = right - mid
-      	creat L[0:n1], R[0:n2] .
-      	for i = 0 to n1 - 1
-      		L[i] = A[left + i]
-      	for i = 0 to n2 - 1
-      		R[i] = A[mid + 1]
-      	L[n1] = INFTY
-      	R[n2] = INFTY
-      	i = 0
-      	j = 0
-      	for k = left to right - 1
-      		if L[i] <= R[j]
-      			A[k] = L[i]
-      			i ++
-      		else
-      			A[k] = R[j]
-      			j ++
-      	return i + j
+      	creat L[mid-l+1], R[r-mid]
+		copy(al, arr[l:mid+1])
+		copy(ar, arr[mid+1:r+1])
+		while i < len(al) && j < len(ar) 
+			if al[i] <= ar[j] 
+				arr[l+j+i] = al[i]
+				i++
+			 else 
+				arr[l+j+i] = ar[j]
+				j++
+		while i < len(al)
+			arr[l+j+i] = al[i]
+			i++
+		while j < len(ar) 
+			arr[l+j+i] = ar[j]
+			j++
+		return j
       ```
 
+- [点击查看源码](/ch7高级排序/inversion/main.go)
       
-
 ##  7.7   最小成本排序
 
 1. 问题描述:
