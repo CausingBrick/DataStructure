@@ -64,14 +64,14 @@
    	x = A[r]
    	i = p - 1
        for j = p to r-1
-       	if A[i] <= x
+       	if A[j] <= x
        	i = i+1
        	exchage A[j], A[i]
        exchage A[i + 1]， A[r]
        return i + 1
    ```
 
-
+- [点击查看源码](/ch7高级排序/partition/main.go)
 
 ##  7.3 快速排序
 
