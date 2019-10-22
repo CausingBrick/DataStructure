@@ -1,3 +1,5 @@
+
+
 ##  7.1 归并排序
 
 1. 算法思路：
@@ -10,6 +12,15 @@
    > 2.  对局部两个数组执行`mergeSort`
    > 3. 通过merge合并两个排序完毕的数组。
    
+   在归并排序里, merge是最重要的基础, 它将已经排好序的片段合并为一个, 并不是简单的合并在一起在用排序算法排序, 而是结合两个数组的排序的特点排序.
+   归并操作的工作原理如下：  
+	- 第一步：申请空间，使其大小为两个已经排序序列之和，该空间用来存放合并后的序列  
+	- 第二步：设定两个指针，最初位置分别为两个已经排序序列的起始位置  
+	- 第三步：比较两个指针所指向的元素，选择相对小的元素放入到合并空间，并移动指针到下一位置  
+	- 重复步骤3直到某一指针超出序列尾  
+	- 将另一序列剩下的所有元素直接复制到合并序列尾  
+
+
 2. 算法描述：
 
    ```
@@ -21,26 +32,26 @@
    		merge(A, left, mid, right)
    		
    merge(A, left, mid, right)
-   	n1 = mid -left 
-   	n2 = right - mid
-   	creat L[0:n1], R[0:n2] .
-   	for i = 0 to n1 - 1
-   		L[i] = A[left + i]
-   	for i = 0 to n2 - 1
-   		R[i] = A[mid + 1]
-   	L[n1] = INFTY
-   	R[n2] = INFTY
-   	i = 0
-   	j = 0
-   	for k = left to right - 1
-   		if L[i] <= R[j]
-   			A[k] = L[i]
-   			i ++
-   		else
-   			A[k] = R[j]
-   			j ++
-               
+		creat L[mid-l+1], R[r-mid]
+		copy(al, arr[l:mid+1])
+		copy(ar, arr[mid+1:r+1])
+		while i < len(al) && j < len(ar) 
+			if al[i] <= ar[j] 
+				arr[l+j+i] = al[i]
+				i++
+			 else 
+				arr[l+j+i] = ar[j]
+				j++
+		while i < len(al)
+			arr[l+j+i] = al[i]
+			i++
+		while j < len(ar) 
+			arr[l+j+i] = ar[j]
+			j++
+		
    ```
+
+- [点击查看源码](/ch7高级排序/merge/main.go)
 
    
 
