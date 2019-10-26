@@ -28,8 +28,6 @@
 
 If you'd like to contribute, please fork the repository and make changes as you'd like. Pull requests are warmly welcome.
 
-- https://github.com/dbader/readme-template)
-
 ## Licensing
 
 This project is licensed under [MIT license](LICENSE). 
