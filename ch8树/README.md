@@ -180,4 +180,23 @@
 
 若将树按照前序与中序输出, 根据此按后序遍历树.
 
-- 分析:
+- 分析:首先按先序遍历的顺序访问各节点., 然后通过中序遍历得到树的左右子树.
+
+- 算法描述:
+
+  ```
+  reconstruction(left, right) 
+  	if left >= right 
+  		return
+  	//获取当前树的中间值
+  	midValue := pre[next]
+  	//获取中间值在中序遍历中的位置
+  	m := index(in, midValue)
+  	reconstruction(left, m)
+  	reconstruction(m+1, right)
+  	print(midValue)
+  
+  ```
+  
+- 算法的对每层递归执行的复杂度为O(n), 最坏的情况下复杂度为O(n^2)
+
