@@ -3,8 +3,8 @@
 package main
 
 import (
-	s "DataStructre/ch4数据结构/stack"
 	"fmt"
+	s "github.com/CausingBrick/DataStructure/ch4数据结构/stack"
 	"os"
 	"strconv"
 )
@@ -42,12 +42,12 @@ func main() {
 }
 
 /*
-// !+ textoutput
+!+ textoutput
 
 $ go run main.go 1 2 +  3 4  - -
 
 result:  -2
 
-// !- textoutput
+!- textoutput
 
 */

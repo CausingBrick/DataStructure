@@ -1,8 +1,8 @@
 package main
 
 import (
-	"DataStructre/ch4数据结构/queue"
 	"fmt"
+	"github.com/CausingBrick/DataStructure/ch4数据结构/queue"
 )
 
 func main() {
