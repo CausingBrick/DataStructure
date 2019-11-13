@@ -195,8 +195,7 @@
   	reconstruction(left, m)
   	reconstruction(m+1, right)
   	print(midValue)
-  
+  	
   ```
   
 - 算法的对每层递归执行的复杂度为O(n), 最坏的情况下复杂度为O(n^2)
-
