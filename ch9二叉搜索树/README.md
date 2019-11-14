@@ -58,4 +58,26 @@ struct Node{
    	print head.value
    ```
 
-   
+### 3.插入
+
+> head 为树的头结点, node为待插入节点
+
+```
+insert(head, node)
+	if head == null
+		return
+	
+	if head.value < node.value //将节点插入head右侧
+		if head.right == null
+			head.right = node
+			node.right = head
+			return
+		insert(head.left, node)
+	else //将节点插入head左侧
+		if head.right == null
+			head.right = node
+			node.parent = head
+			return
+		insert(head.left, node)
+```
+
