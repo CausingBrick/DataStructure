@@ -90,8 +90,8 @@ func preorder(head *Node) {
 	if head == nil {
 		return
 	}
-	preorder(head.left)
 	fmt.Printf("%v ", head.value)
+	preorder(head.left)
 	preorder(head.right)
 }
 
@@ -100,8 +100,8 @@ func inorder(head *Node) {
 	if head == nil {
 		return
 	}
-	fmt.Printf("%v ", head.value)
 	inorder(head.left)
+	fmt.Printf("%v ", head.value)
 	inorder(head.right)
 }
 
