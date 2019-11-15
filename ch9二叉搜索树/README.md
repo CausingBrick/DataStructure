@@ -81,3 +81,44 @@ insert(head, node)
 		insert(head.left, node)
 ```
 
+### 4.查找
+
+查找要在二叉搜索树中找出含有指定键值的节点
+
+> head 为树的头结点, val为指定的键值
+
+```
+find(head, val)
+    point = head
+	while point != null && point.value != val
+		if point.value < val
+			point = point.right
+		else
+			point = point.left
+	return point
+```
+
+### 5.删除
+
+删除包含指定键值的节点
+
+> head 为树的头结点, node为待删除
+
+```
+delete(head, val)
+	point = head
+	if point.left != null && point.right != null
+		point.value = point.left.value
+		delete(point.left,point.value)
+		return
+	if point.left == nil && point.right == null 
+		if point.parent.left == point
+			point.parent.left = null
+			point = null
+		else
+			point.parent.right = null
+			point.parent = null 
+		return
+```
+
+### 6. [代码实现](./binarySearchTree.go)

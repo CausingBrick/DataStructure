@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-// Node the unit of the binary search tree
+// Node is the unit of the binary search tree
 type Node struct {
 	value               int
 	left, right, parent *Node
@@ -79,7 +79,7 @@ func (head *Node) delete(val int) error {
 	return nil
 }
 
-// empty reset the current node value
+// empty the current node value
 func (head *Node) empty() {
 	head.value = 0
 	head.left, head.right, head.parent = nil, nil, nil
