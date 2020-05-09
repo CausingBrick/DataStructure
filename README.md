@@ -22,7 +22,7 @@
 
 数据结构在各大教材里没有严格的定义, 可以简单的理解为 **数据结构是研究非数值计算的程序设计的问题中计算机的操作对象之间的关系和操作的学科**. 而计算机操作的对象的本质就是数据,  数据结构的研究内容就是数据的逻辑结构, 物理存储结构和算法.
 
-<img src="\\wsl$\Ubuntu-20.04\home\causingbrick\workspace\DataStructure\img\image-20200509091129440.png" alt="image-20200509091129440" title="数据结构三要素" style="zoom:70%;" align="left" />
+<img src="img/image-20200509091129440.png" alt="image-20200509091129440" title="数据结构三要素" style="zoom:70%;" align="left" />
 
 
 
