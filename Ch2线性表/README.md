@@ -175,9 +175,9 @@
      ```c
      //由一个个结点Node组成
      ADT Node
-  	next	//指向后继的指针
+    	next	//指向后继的指针
      	pre	//指向前驱的指针
-  	key	// 关键字即存储的的信息
+    	key	// 关键字即存储的的信息
      ```
 
    - 搜索
@@ -187,9 +187,9 @@
      ```c
      Search(L, k)
      	x = L.head
-  	while x != nil and x.key != k
+    	while x != nil and x.key != k
      		x = x.next
-  	return x
+    	return x
      ```
 
      搜索一个含有n个结点的链表, 最坏的运行时间为O(n), 因为可能需要搜索整个链表.
@@ -202,9 +202,9 @@
      Insert(L,x)
      	x.next = L.head
      	if L.head != nil
-  		L.head.prev = x
+     		L.head.prev = x
      	L.head = x
-  	x.prev = nil
+    	x.prev = nil
      ```
 
      在一个含n个元素的链表上执行的效率为O(1).
@@ -214,11 +214,11 @@
      Delete(L, x)将一个元素x从链表L中删除.过程中需要给定一个指向x的指针,然后通过修改一些指针将x移除出链表.若要删除具有给定关键字的元素,则别绪先调用Search算法找到该元素
    
      ```c
-  Delete(L,x)
+     Delete(L,x)
      	if x.prev != nil
-     		x.prev.next = x.next
+             x.prev.next = x.next
      	else L.head = x.next
-   	if x.next != nil
+         if x.next != nil
      		x.next.prev = x.prev
      ```
      
