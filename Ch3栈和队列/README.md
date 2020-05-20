@@ -114,3 +114,73 @@ second(i)
 ```
 
 <img src="../img/image-20200519225950470.png" alt="主函数执行期间运行栈的状态" align="left" />
+
+
+
+## 3.2 队列
+
+### 3.2.1 队列的定义特点
+
+队列是实行先入先出(fist in fist out, FIFO)策略的线性表.删除操作叫出队, 插入操作叫入队, 允许插入的一端叫做队尾, 允许删除的一端称之为队头.
+
+![队列示意图](../img/image-20200520135358276.png)
+
+### 3.2.2 队列的实现
+
+与栈类似, 队列有两种实现方式
+
+1. 顺序实现
+
+用数组Q[1..2]来实现一个最多容纳`n-1`个元素的队列的一种方式, 该队列有一个属性`Q.head`指向对头元素,属性`Q.tail`则指向下一个新元素将要插入的位置.当时图从空队列中执行出队时会发生下溢，再队列满的时候入队会发生上溢，一下时顺序队列的几个操作，下面的入队和出队的操作中，忽略了下溢和上溢的检查
+
+```c
+ENQUEUE(Q, x)
+	Q[Q.tail] = x
+	if Q.tail == Q.length
+		Q.tail = 1
+	else Q.tail += 1
+	
+DEQUEEU(Q, x)
+	x = Q[Q.head]
+	if Q.head = Q.length
+		Q.head = 1
+	else 
+		Q.head += 1
+	return x
+```
+
+上述两种操作的时间都为O（1）
+
+
+
+2. 链式实现
+
+   空队列也至少含有一个结点Q                                 
+
+   ```c
+   //结点抽象结构
+   ADT Node
+   	key
+   	next
+   	
+   ADT Q
+   	head
+   	tail
+   	
+   ENQUEUE(Q, x)
+   	creat node N
+   	N.key = x
+   	N.key = nil
+   	Q.tail.next = N
+   	Q.tail = N
+   	
+   DEQUEEU(Q, x)
+   	if Q.head == nil
+   		return nil
+   	else 
+   		x = Q.head
+   		Q.head = x.next
+   		return x.key
+   ```
+
+   以上两种操作执行时间也为O(1)
