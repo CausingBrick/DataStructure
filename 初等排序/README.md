@@ -59,7 +59,7 @@
   		for i form 0 to A.lenth -1
   			if A[i] > A[i+1]
   				A[i]与A[i+1]交换
-  				flag = false
+  				flag = true
   ```
 
 * 复杂度分析:
