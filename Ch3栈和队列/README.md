@@ -117,7 +117,7 @@ second(i)
 	int x,y
 ```
 
-<img src="../img/image-20200519225950470.png" alt="主函数执行期间运行栈的状态" align="left" />
+<img src="../img/image-20200519225950470.png" alt="主函数执行期间运行栈的状态"  />
 
 
 
