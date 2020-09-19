@@ -688,7 +688,7 @@ FLoyd算法任然使用带权的邻接矩阵arcs来表示有向网G, 求从顶�
 
 **Floyd算法步骤**
 
-```
+```c
 FLoyd(G)
 	//初始化各对结点之间的路径和距离
 	for i=0 to G.vexnum
@@ -710,4 +710,64 @@ FLoyd(G)
 
 ### 5.4.3 拓扑排序
 
+#### 1.AOV-Net
+
 无环的有向图称作**有向无环图(Directed Acycline Graph)**,简称DAG图.
+
+用顶点表示活动, 弧表示活动间的优先关系的有向图称为`活动网(Activity On Vertex Network)`
+
+1. AOV-Net中, 若从顶点vi到vj有一条有向路径,则vi是vj的前驱, vj是vi的后继. 若vi, vj是网中的一条弧, 则vi是vj的直接前驱, vj是vi的直接后继
+2. AOV-Net中不应出现有向环, 否则会陷入死循环.
+
+`拓扑排序`收拾将AOV网中的所有顶点排成一个线性序列, 满足: 在AOV-Net中由vi到vj有一条路径,则线性序列中的顶点vi必定在vj之前
+
+#### 2. 拓扑排序的过程
+
+1. 在有向图中选取一个无前驱的顶点并输出它
+2. 图中删除该节点和以它为尾的弧
+3. 重复1， 2直到不存在无前驱的结点
+4. 若此时输出的顶点数小于有向图的顶点数， 则说明图中含有有向环， 否则输出的顶点序列即为一个拓扑序列
+
+![image-20200919084157129](../img/image-20200919084157129.png)
+
+#### 3. 拓扑排序的实现
+
+针对拓扑排序过程的特点， 可以采用邻接表作为有向图的存储结构
+
+需要下列辅助结构
+
+1. indegree[i] : 存放各顶点的入度， 没有前驱的顶点就是入度为零的顶点。删除顶点及以它为尾的弧的操作， 可以用弧头的顶点的入度减一的办法实现
+2. 栈S ：暂存入度为零的顶点， 这样可以避免重复扫描数组indegree检测入度为0的顶点， 提高效率
+3. topo[i] ：记录拓扑序列的顶点序号
+
+**算法步骤**
+
+1. 求出个顶点的入度存入数组indegree[i]中， 并将入度为0的顶点压入栈S
+2. 栈不空 重复执行下列操作
+   - 栈顶vi出栈保存在拓扑序列数组topo中
+   - 顶点vi的每个邻接点vk的入度减一， 若vk入度为0，vk入栈
+3. 判断输出个数与顶点个数，判断是否存在有向环，若有无法进行排序 ，否则能得到拓扑序列
+
+**算法描述**
+
+```c
+TopologicalSort(G, topo[])
+	FindDegree(G, indegree)
+	for i=0 to G.vexnum
+		if !indegree[i]
+			S.push(i)
+	outvexnum = 0
+	while !s.Empty()
+		i = S.pop()
+		topo[m++] = i
+		p=G.vertices[i].firstarc
+		while p!=null
+			k = p.adjvex
+			--indegree[k]
+			if indegree[k]==0
+				S.push(k)
+			p=p.nextarc
+	if outvexnum < G.vexnum
+		output ERROR
+```
+
