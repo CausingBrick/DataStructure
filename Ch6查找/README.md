@@ -195,7 +195,248 @@ $ASL=L_b+L_w, L_b为查找索引表确定所在快的平均查找长度,L_w为�
 
 分块查找的速度虽然不如折半查找算法，但比顺序查找算法快得多，同时又不需要对全部节点进行排序。当节点很多且块数很大时，对索引表可以采用折半查找，这样能够进一步提高查找的速度。
 
-###   5.4 散列法
+## 5.3 树表的查找
+
+线性表更适用于静态查找表, 索要对动态查找表惊醒高效率的查找, 可采用集中特殊的二叉树作为查找白哦的的组织形式, 统称为树表.
+
+### 5.3.1 二叉搜索树
+
+二叉搜索树是一种可以进行插入, 搜索, 删除等操作的数据结构了可以用做字典优先级队列. 
+
+#### 1.二叉搜索树的概念
+
+二叉排序树或者一颗空树,或者是具有下列性质的二叉树
+
+- 左子树不空, 左子树上的所有节点值小于其根节点的值
+- 右子树不空, 右子树上的所有节点值大于其根节点的值
+- 左右子树也为二叉搜索树
+
+
+
+二叉搜索树可以使用一个链表数据结构表示, 每一个结点就是一个对象, 如下
+
+```
+ADT NODE
+	parent
+	left,right
+	key
+```
+
+- `key`: 为每个节点存储的信息
+- `left`, `right`: 左右子节点的指针地址
+- `parent`:节点的父节点
+
+
+
+与二叉树相同的思路, 二叉搜索树也有三种简单的按序输出来访为所有的关键字:
+
+1. 前序遍历:
+
+   ```
+   PREORDER-TREE-WALK(x)
+   	if x != NIL
+   		output x.key
+   		PREORDER-TREE-WALK(x.left)
+   		PREORDER-TREE-WALK(x.right)
+   ```
+   
+2. 中序遍历:
+
+   ```
+   INORDER-TREE-WALK(x)
+   	if x != NIL
+   		INORDER-TREE-WALK(x.left)
+   		output x.key
+   		INORDER-TREE-WALK(x.right)
+   ```
+   
+3. 后序遍历:
+
+   ```
+   POSTORDER-TREE-WALK(x)
+   	if x != NIL
+   		POSTORDER-TREE-WALK(x.left)
+   		POSTORDER-TREE-WALK(x.right)
+   		output x.key
+   ```
+
+#### 2.二叉搜索树的查询
+
+查存储在二叉搜索树中的关键字.
+
+##### 1.查找
+
+使用下列过程在二叉搜索树中查找给定的关键字.
+
+> 输入一个指向树根的指针和一个关键字k, 若结点存在, 返回一个指向关键字k的结点指针,否则返回NIL
+
+```
+RECURSIVE-TREE-SEARCH(x, k)
+	if x == NIL or k == x.key
+		return NIL
+	if k < x.key
+		return TREE-SEARCH(x.left, k)
+	else
+		return TREE-SEARCH(x.right, k)
+```
+
+可以使用循环展开递归, 对于大部分计算机可以提高效率
+
+```
+ITREATIVE-TREE-SEARCH(x, k)
+	while x != NIL and k != x.key
+		if k < x.key
+			x = x.left
+		else
+			x = x.right
+		return x
+```
+
+两个的运行时间都为O(h), h为树的高度.
+
+##### 2.最大和最小关键字元素
+
+根据二叉搜索树的性质, 分别沿着根的左指针和右指针,直到遇到NIL可以找到最小元素和最大元素
+
+```
+TREE-MINIMUM(x)
+	while x.left != NIL
+		x = x.left
+	return x
+```
+
+```
+TREE-MAXIMUM(x)
+	while x.right != NIL
+		x = x.right
+	return x
+```
+
+二叉搜索树的性质保证两个算法都是正确的. 他们都在在一棵高度为h的树上以O(h)的时间内执行完
+
+##### 3.后继和前驱
+
+给定一棵二叉搜索树中的一个结点, 有时候需要按中序遍历的次序寻找他的后继. 若所有的关键字互不相同, 则一个结点x的后继时大于x.key的最小关键字的结点. 
+
+一颗二叉搜索树的的结构允许我们通过没有任何关键字的比较来确定一个结点的后继.若后继存在, 下面的过程将返回一个x节点的后继,若x是这棵树的最大关键字, 则返回NIL
+
+```
+TREE-SUCCESSOR(x)
+	if x.right !=  nil
+		return TREE-MINIMUM(x)
+	y = x.parent
+	while y != NIL and x == y.right
+		x = y
+		y = y.parent
+	reutrn y
+```
+
+上面的伪代码分为两种情况:
+
+1. 若结点x的右子树非空, 那么x的后继恰是x右子树中的最左结点, 通过调用TREE-MINIMUM(x)即可得到
+2. 若结点x的右子树为空, 那么x是x的父节点y的左子节点则返回y, 否则返回x的有左孩子的最底层祖先
+
+在一颗高度为h的树中, 该算法运行时间为O(h), 因为该过程或者遵从一条简单路径沿树向上或者遵从简单路径沿树向下
+
+#### 3.插入和删除
+
+插入和删除会引起二叉搜索树表示的动态集合的变化. 一定要修改数据结构来反应这个变化, 但修改要保持二叉搜索树的性质的成立
+
+##### 1.插入
+
+要将一个新值v插入到一颗二叉搜索树T中, 需要调用TREE-INSEART.
+
+> z作为输入, 其中z.key = v, z.left = NIL, z.right = NIL. 过程中要修改T和z的某些属性把z插入到合适的位置
+
+```
+TREE-INSEART(T,z)
+	y = NIL
+	x = T.root
+	whlie x != NIL
+		y = x
+		if z.key < x.key
+			x = x.left 
+		else
+			x = x.right
+	z.parent = y
+	if y == NIL
+		T.root = z
+	elseif z.key < y.key
+		y.left = z
+	else
+		y.right = z
+```
+
+```
+RECURSIVE-TREE-INSEART(T,z)
+	if T.root == NIL
+		T.root = z
+		return 
+	if z.key < T.root.key
+		if T.root.left == NIL
+			T.root.left = z
+			return
+		RECURSIVE-TREE-INSEART(T.root.left,z)
+	else
+		if T.root.right == NIL
+			T.root.right = z
+			return
+		RECURSIVE-TREE-INSEART(T.root.right,z)
+```
+
+在一颗高度为h的树中, 该算法运行时间为O(h)
+
+##### 2.删除
+
+从一颗二叉搜索树中删除结点x的整个策略分三种情况:
+
+1. 若z没有子节点, 简单删除, 并修改其父节点的用NIL替换z
+2. 若z只有一个孩子, 则将这个孩子提升到树种z的位置上, 并修改z的父节点, 用z的孩子来替换z
+3. 若z有两孩子,则照z的后继y, 并让y占据树中z的位置. z的原来右子树部分称为y的新的右子树, 并且z的左子树称为y的新左子树.
+
+算法的过程与概况的情况有些许不同
+
+1. 若z没有左子节点, 则用右子树替换z, 无论右子树是否为空
+2. 有且仅有一个左子节点, 则直接替换z
+3. z的两个子节点都存在. 需要寻找z'的后继y, y位于z的右子树种并且没有没有左孩子, 则将y替换z, z的左子树变为y的左子树.
+4. 若y是z的右子树, 那么用y替换z, 并仅留下的右孩子. 否则, y位于z的右子树中但并不是z的右孩子.在这种情况下,先用y的右孩子替换y, 再用y替换z
+
+定义一个子过程,用于另一棵子树替换一颗子树并成为其双亲的孩子结点. 当此过程用一颗以v为根的子树来替换一颗以u为根的子树时, 结点u的双亲就变为结点v的双亲, 并且最后v成为u的双亲的相应孩子.
+
+```
+TRANSPLANT(T,u,v)
+	if u.parent == NIL
+		T.root = v
+	elseif u == u.parent.left
+		u.parent.left = v
+	else 
+		u.parent.right = v
+	if V != NIL
+		v.parent = u.parent
+```
+
+利用TRANSPLANT过程, 实现T中删除结点
+
+```
+TREE-DELETE(T,z)
+	if z.left  == NIL
+		TRANSPLANT(T,z,z.right)
+	elseif z.right == NIL
+		TRANSPLANT(T,z,z.left)
+	else
+		y = TREE-MINIMUM(z.right)
+		if y.parent != z
+			TRANSPLANT(T,y,y.right)
+			y.right = z.right
+			y.right.parent = y
+		TRANSPLANT(T,z,y)
+		y.left = z.left
+		y.left.parent = y
+```
+
+在一颗高度为h的树中, 该算法运行时间为O(h)
+
+## 5.4 散列法
 
 1. 相关定义:
 
