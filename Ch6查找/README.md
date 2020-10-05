@@ -468,6 +468,145 @@ BBST上插入一个结点x的算法描述如下：
 
 
 
+### 5.3.3 B树
+
+B树是为磁盘或其他直接存取辅助设备而设计的一种平衡二叉树.
+
+#### 1.B树的定义
+
+一棵B树是具有如下性质的有根树(根为T.root):
+
+```
+ADT NODE
+	n
+	leaf
+	key[]
+	c[]*NODE
+```
+
+
+
+1. 每个结点x属性
+   - `x.n` 表示存储在x中的关键字个数
+   - `x.n`个关键字以非降序排列,$x.key_1 <= x.key_2 <=...<=x.key_{x.n+1}$
+   - `x.leaf`,bool类型的值,表示x是否为叶节点
+2. 每个内部节点x还包含`x.n+1`个指向其他孩子的指针$x.c_1,x.c_2,..,x.c_{x.n+1}$,因为叶节点没有孩子，所以没有这个属性
+3. $x.key_i$对存储在各子树中的关键字范围加以分割:如果$k_i$为任意一个存储在以$c.c_i$为根的子树中的关键字, 那么$k_1 <= x.key_1 <=k_2 <=x.key_2<=...<=x.key_{x.n}<=k_{x.n+1}$
+4. 每个叶节点的深度都相同且为树高度h
+5. 每个结点所包含的关键字个数有上界和下界.用一个被称为B树的最小度数(minimum degree)的固定度数t>=2来表示这些界:
+   - 除根节点之外的每个结点必须至少有t-1个关键字. 若树非空,根节点至少有一个关键字
+   - 每个结点最多可以包含$2t-1$个关键字,当一个结点存满这么多关键字是称该**满结点**
+
+#### 2.B树的基本操作
+
+##### 搜索B树
+
+输入一个指向一个某子树根结点x的指针, 以及要在该子树中搜索的一个关键字k.
+
+顶层调用方式为B-TREE-SEARCH(T.root,k), 若k在树中,算法返回的是结点y和使得$y.key_i=k$的下标i组成的有序对(y,i)否则返回NIL
+
+**算法描述**
+
+```
+B-TREE-SEARCH(x,k)
+	i = 1
+	//找最小下标i满足 k<= x.keyi 找不到则 i = x.n+1
+	while i <= x.n and k > x.keyi
+		i = i + 1
+	if i <= x.n and k == x.keyi	//找到了关键字返回
+		return (x,i)
+	elseif x.leaf	//若x为叶节点则返回空
+		return NIL
+	else DISK-READ(x.ci)//对存储器读取一次子树,递归搜索
+		return B-TREE-SEARCH(x.ci,K)
+```
+
+**算法分析**
+
+递归过程中是一条从树根向下的简单路径. 因此, 由B-TREE-SEARCH过程访问的磁盘页面次数为$O(h) =O(log_tn),h为树高度,n为树中所含的关键字个数$,由于$x.n<2t$,所以循环在每个结点中花费的时间为$O(t)$总CPU时间为$O(th) =O(tlog_tn)$
+
+##### 创建一颗空B树
+
+要创建一棵空B树, 先调用B-TREE-CREATE创建一个空的根节点,在我调用插入算法添加关键字.其中ALLOCATE-NODE在$O(1)$时间内为一个新结点分配一个磁盘页, .
+
+```
+B-TREE-CREATE(T)
+	x = ALLOCATE-NODE()
+	x.leaf =TRUE
+	x.n = 0
+	DISK-WRITE(x)
+	T.root = x
+```
+
+**分裂B树的结点**
+
+输入一个非满的内部节点x和其一个满子结点x.ci. 过程将这个子节点分裂为两个,并调整x使之包含新分裂的结点.要分裂一个满的根, 先让根称为一个新的空根节点的子节点, 这样在分裂一次树高加1即可, 分裂是树长高的唯一途径.
+
+```
+B-TREE-SPILT-CHILD(x,i)
+	z = ALLOCATE-NODE()
+	y = x.ci
+	z.leaf = y.leaf
+	z.n = t - 1
+	if j = 1 to t - 1
+		z.key[i] = y.key[j+t]
+	if not z.leaf
+		for j = 1 to t
+			z.c[i] = y.c[i+t]
+	y.n = t - 1
+	for j = x.n+1 downto i+1
+		x.c[j+1] = x.[j]
+	x.c[i+1] = z
+	for j = x.n downto i
+		x.key[j+1] = x.key[j]
+	x.key[i] = y.key[i]
+	x.n = x.n+1
+	DISK-WRITE(y)
+	DISK-WRITE(z)
+	DISK-WRITE(x)
+```
+
+
+
+##### B树中插入一个关键字
+
+```
+B-TREE-INSERT(T,k)
+	r = T.root
+	if r.n == 2t-1
+		s = ALLOCATE-NODE()
+		T.root = s
+		s.leaf = FALSE
+		s.n = 0
+		s.c[1] = r
+		B-TREE-SPILT-CHILD(s,1)
+		B-TREE-INSERT-NOTFULL(s,k)
+	else
+		B-TREE-INSERT-NOTFULL(r,k)
+```
+
+```
+B-TREE-INSERT-NOTFULL(x,k)
+	i = x.n
+	if x.leaf
+		while i >= 1 and k < x.key[i]
+			x.key[i+1] = x.key[i]
+			i = i - 1
+		x.key[i+1] = k
+		x.n = x.n + 1
+		DISK_WRITE(x)
+	else
+    	while i >= 1 and k < x.key[i]
+			i = i -1
+		i = i + 1
+		DISK-READ(x.c[i])
+		if x.c[i].n == 2t - 1
+			B-TREE-SPILT-CHILD(x,i)
+			if k > x.key[i]
+				i = i + 1
+		B-TREE-INSERT-NOTFULL(x.c[i],k)
+```
+
 
 
 ## 5.4 散列法
