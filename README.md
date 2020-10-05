@@ -15,8 +15,9 @@
   - [Ch2 线性表](Ch2线性表/README.md)
   - [Ch3 栈和队列](Ch3栈和队列/README.md) (操作受限的线性表)
 - [Ch4 树](Ch4树/README.md)
-- [Ch5 图]
-- [Ch6 排序]
+- [Ch5 图](Ch5图/README.md)
+- [Ch6 查找](Ch6查找/README.md)
+- [Ch7 排序](Ch7排序/README.md)
 
 ## 内容概览
 
