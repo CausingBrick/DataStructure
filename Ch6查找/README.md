@@ -676,6 +676,3 @@ B-TREE-INSERT-NOTFULL(x,k)
    
    * 散列函数根据不同用途会有不一样的算法, 上述用的是求余数法.
    
-3. 算法实现:
-
-   * [hash](hash/hash.go)
