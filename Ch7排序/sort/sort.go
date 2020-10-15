@@ -15,10 +15,10 @@ func InsertionSort(a []int) {
 	var j, val int
 	for i := 1; i < len(a); i++ {
 		val = a[i]
-		for j = i - 1; j >= 0 && a[j] > val; j-- {
-			a[j+1] = a[j]
+		for j = i; j > 0 && a[j-1] > val; j-- {
+			a[j] = a[j-1]
 		}
-		a[j+1] = val
+		a[j] = val
 	}
 }
 
@@ -94,11 +94,12 @@ func ShellSort(a []int) {
 	for g := len(gap) - 1; g >= 0 && gap[g] > 0; g-- {
 		for i := gap[g]; i < len(a); i++ {
 			temp := a[i]
-			var j int
-			for j = i - gap[g]; j >= 0 && a[j] > temp; j -= gap[g] {
-				a[j+gap[g]] = a[j]
+			j := i
+			for j >= gap[g] && a[j-gap[g]] > temp {
+				a[j] = a[j-gap[g]]
+				j -= gap[g]
 			}
-			a[j+gap[g]] = temp
+			a[j] = temp
 		}
 	}
 }

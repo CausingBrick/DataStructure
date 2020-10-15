@@ -61,11 +61,11 @@
   InsertionSort(A)
       for i from 1 to A.length
           val = A[i]
-          j = i -1
-          while j >= 0 and A[j] > val
-              A[j+1] = A[j]
+          j = i
+          while j > 0 and A[j-1] > val
+              A[j] = A[j-1]
               j--
-          A[j+1] = val 
+          A[j] = val 
   ```
 
 * 复杂度分析:
@@ -120,4 +120,55 @@
   1. 稳定排序
   2. 要进行折半查找，所以只能用顺序结构， 不能使用链式结构
   3. 适合初始记录无序， n较大的情况
+
+## 7.2.3 希尔排序
+
+Shell's Sort 又称缩小增量排序，插入排序的一种。
+
+希尔排序是指上使用的是分组插入的方法， 先将整个待排序记录序列分割为多组， 从而减少参与直接插入排序的数据量，对每组分别进行排序，再增加每组的数据量，重新分组。如此进行几次分组排序之后，对整个序列进行一次直接插入排序。
+
+<img src="../img/image-20201015210629568.png" alt="image-20201015210629568"  align="left"/>
+
+* 算法描述:
+
+  ```
+  ShellSort
+  	gaps = creatGaps(A.length)
+  	for i form gaps.length downto 0
+  		insetionSortWithGap(A, gaps[i])
+  
+  //Generate increment sequence of 3*i+1		
+  creatGaps(len)
+  	gaps = {1}
+  	i = 0
+  	gap = 3*gaps[i]+1
+  	while gap < len
+  		i = i + 1
+  		gaps[i] = gap
+  		gap = 3*gaps[i]+1
+  	return gaps	
+  
+  insetionSortWithGap(A,g)
+  	for i form g to A.lenth
+    		val = A[g]
+    		j = i
+    		while j >= g and a[j-g] > val
+    			a[j] = g[j-g]
+    			j = j - g
+    		a[j] = val
+  ```
+
+
+* 复杂度分析:
+
+  希尔排序的算法复杂度与增量序列的选取有密切关系,增量`g`的选择也有很多方法, 举例当$g_{n+1}=3g_n+1$时,算法复杂度基本维持在$O(N^{1.25})$.
+
+* 适用性分析:
+
+  1. 记录跳跃，为不稳定排序.
+  2. 只能用于线性顺序结构不能使用链式结构
+  3. 增量的影响较大 ，需要选择合适的增量序列
+  4. 比较次数和交换次数比直接插入都小，适合记录无序，n较大的情况
+
+
 
