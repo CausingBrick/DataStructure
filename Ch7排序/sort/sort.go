@@ -46,9 +46,9 @@ func BinaryInsertionSort(a []int) {
 // BubbleSort 冒泡排序
 func BubbleSort(a []int) {
 	for i := 0; i < len(a); i++ {
-		for j := 0; j < len(a)-i-1; j++ {
-			if a[j] > a[j+1] {
-				a[j], a[j+1] = a[j+1], a[j]
+		for j := 1; j < len(a)-i; j++ {
+			if a[j] < a[j-1] {
+				a[j], a[j-1] = a[j-1], a[j]
 			}
 		}
 	}
@@ -57,8 +57,7 @@ func BubbleSort(a []int) {
 // BubbleSortF flag 冒泡排序
 // 改进优化BubbleSort
 func BubbleSortF(a []int) {
-	flag := true
-	for flag {
+	for flag := true; flag; {
 		flag = false
 		for i := 0; i < len(a)-1; i++ {
 			if a[i] > a[i+1] {
