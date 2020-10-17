@@ -92,13 +92,36 @@ func ShellSort(a []int) {
 
 	for g := len(gap) - 1; g >= 0 && gap[g] > 0; g-- {
 		for i := gap[g]; i < len(a); i++ {
-			temp := a[i]
+			val := a[i]
 			j := i
-			for j >= gap[g] && a[j-gap[g]] > temp {
+			for j >= gap[g] && a[j-gap[g]] > val {
 				a[j] = a[j-gap[g]]
 				j -= gap[g]
 			}
-			a[j] = temp
+			a[j] = val
 		}
 	}
+}
+
+// QuickSort 快速排序
+func QuickSort(a []int, p, r int) {
+	if p < r {
+		m := partition(a, p, r)
+		QuickSort(a, p, m-1)
+		QuickSort(a, m+1, r)
+	}
+}
+
+// partition 原址排序返回一个分割
+func partition(a []int, p, r int) int {
+	val := a[r]
+	i := p - 1
+	for j := p; j < r; j++ {
+		if a[j] <= val {
+			i++
+			a[i], a[j] = a[j], a[i]
+		}
+	}
+	a[i+1], a[r] = a[r], a[i+1]
+	return i + 1
 }
