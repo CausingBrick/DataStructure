@@ -255,3 +255,103 @@ Quick Sort 是由冒泡排序改进而来。 冒泡排序过程中每次只对�
   1. 不稳定排序
   2. 排序过程中需要定位上界与下界适合顺序结构不适合非顺序结构
   3. n较大时，平均情况下快速排序时所有内部排序算法中速度最快的一种，所以适合初始记录无序，n较大时的情况
+
+## 7.4 选择排序
+
+选择排序基本思想：每一趟从待排序序列中选出关键字最小的记录，按顺序放在已排序的序列最后，直至全部排完序。
+
+### 7.4.1 简单选择排序
+
+* 算法描述:
+
+  ```
+  SELECTIONSORT(A)
+  	for i form 0 to A.lenth-1
+  		min = i
+  		for j from i to A.lenth-1
+  			if A[j] < A[min]
+  				min = j
+  		exchange A[min] and A[i]
+  ```
+
+* 复杂度分析:
+
+  无论什么情况下 都需要执行$(N-1)+(N-2)+...+1= (N^2-N)/2$次, 算法复杂度数量级为$O(N^2)$.
+
+* 算法适用性分析
+
+  * 会直接交换不相邻的两个元素, 以及两个元素值相同时也会交换位置, 为不稳定排序
+  * 固定的算法复杂度
+  * 可以用于链式存储结构
+  * 移动记录次数较少，当每一记录占用空间较多时，比直接插入快
+
+### 7.4.2 堆排序
+
+#### 1.堆
+
+(二叉)堆是一个数组，可以被看成一个近似完全的二叉树，书上每个节点对应数组中的每一个元素。 除了最底层之外，该树完全是满的，而且是从左向右填充，表示对的数组A包括两个属性：A.length表示数组元素个数，A.heap-size表示有多少个堆存储在数组中，$0 \leq A.heap-size \leq A.length$树的根节点规定为A[1],这样给定一个下标i，可计算出父节点，左右子节点的下标
+
+```
+PARENT(i)
+	return [i/2]
+
+LEFT(i)
+	return 2i
+	
+right(i)
+	return 2i+1
+```
+
+二叉堆可以分为两种形式: 最大堆和最小堆。两种堆中节点的值都要满足堆的性质
+
+- 最大堆：父结点的键值总是大于或等于任何一个子节点的键值；
+- 最小堆：父结点的键值总是小于或等于任何一个子节点的键值。
+
+堆排序算法中使用最大堆，最小堆通常用于构造优先队列
+
+#### 2.维护堆的性质
+
+MAX-HEAPIEFY使用于维护最大堆的性质的过程。输入为一个数组A和下标i，调用算法时假定根节点为LEFT(i)和RIGHT(i)的二叉树都是最大堆，此时A[i]有可能小于其孩子，这样违背了最大堆的性质，MAX-HEAPIEFY通过让A[i]的值逐级下降，从而使得下标i为根节点的字数从新遵循最大堆性质
+
+```
+MAX-HEAPIEFY(A,i)
+	l=LEFT(i)
+	r=RIGHT(i)
+	if l <= A.heap-size and  A[l] > A[i]
+		largest = l
+	else 
+		largest = i
+	if r <= A.heap-size and A[r] > A[largest]
+		largest = r
+	if largest != i
+	 exchange A[i] with A[largest]
+	 MAX-HEAPIEFY(A,largest)
+```
+
+对于长度为n的数组而言，时间复杂度为O(lgn)，即对一颗树高为h的堆而言，该操作的时间复杂度为O(h)
+
+#### 3.建堆
+
+数组A([n/2]+1..n)中的元素都是树的叶节点，每个叶节点都可以只看为只包含一个元素的堆。
+
+```
+BUILD-MAX-HEAP(A)
+	A.heap-size = A.length
+	for i = [A.length/2] downto 1
+		MAX-HEAPIEFY(A,i)
+```
+
+#### 4.堆排序
+
+初始时，先调用BUILD-MAX-HEAP对数组A进行最大堆操作，由于数组中最大值为A[1]存储的是数组中的最大元素，通过与A[n]交换，可以将元素放到正确的位置，在从堆中去掉节点n，剩余节点中仍然是最大堆，调用MAX-HEAPIEFY维护交换元素后可能紊乱的最大堆性质。重复这一过程直至堆的大小降低至2
+
+```
+HEAPSORT(A)
+	BUILD-MAX-HEAP(A)
+	for i = A.length downto 2
+		exchange A[1] with A[i]
+		A.heap-size = A.heap-size - 1
+		MAX-HEAPIEFY(A,1)
+```
+
+排序时间复杂度为$O(nlg_n)$,因为调用BUILD-MAX-HEAP时间复杂度为O(n)而n-1次调用MAX-HEAPIEFY每次时间为$O(lg_n)$

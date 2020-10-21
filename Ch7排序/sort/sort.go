@@ -68,19 +68,6 @@ func BubbleSortF(a []int) {
 	}
 }
 
-// SelectionSort 选择排序
-func SelectionSort(a []int) {
-	for i := 0; i < len(a); i++ {
-		min := i
-		for j := i; j < len(a); j++ {
-			if a[min] > a[j] {
-				min = j
-			}
-		}
-		a[min], a[i] = a[i], a[min]
-	}
-}
-
 // ShellSort 希尔排序
 // gap 增量为3*gap+1
 func ShellSort(a []int) {
@@ -124,4 +111,52 @@ func partition(a []int, p, r int) int {
 	}
 	a[i+1], a[r] = a[r], a[i+1]
 	return i + 1
+}
+
+// SelectionSort 选择排序
+func SelectionSort(a []int) {
+	for i := 0; i < len(a); i++ {
+		min := i
+		for j := i; j < len(a); j++ {
+			if a[min] > a[j] {
+				min = j
+			}
+		}
+		a[min], a[i] = a[i], a[min]
+	}
+}
+
+// HeapSort 堆排序
+func HeapSort(a []int) {
+	heapSize := len(a)
+	buildMAXHeap(a)
+	for i := heapSize - 1; i >= 0; i-- {
+		a[0], a[i] = a[i], a[0]
+		heapSize--
+		maxHeapify(a, 0, heapSize)
+	}
+}
+
+// buildMAXHeap 将数组a做最大堆化处理
+func buildMAXHeap(a []int) {
+	heapSize := len(a)
+	for i := heapSize >> 1; i >= 0; i-- {
+		maxHeapify(a, i, heapSize)
+	}
+}
+
+// maxHeapify 维护最大堆的性质
+func maxHeapify(a []int, i, heapSize int) {
+	left, right := i<<1+1, i<<1+2
+	largest := i
+	if left < heapSize && a[left] > a[largest] {
+		largest = left
+	}
+	if right < heapSize && a[right] > a[largest] {
+		largest = right
+	}
+	if largest != i {
+		a[largest], a[i] = a[i], a[largest]
+		maxHeapify(a, largest, heapSize)
+	}
 }

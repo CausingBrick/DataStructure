@@ -59,15 +59,6 @@ func TestBubbleSortF(t *testing.T) {
 	}
 }
 
-func TestSelectionSort(t *testing.T) {
-	sorted := make([]int, len(unsort))
-	copy(sorted, unsort)
-	SelectionSort(sorted)
-	if !isSorted(sorted) {
-		t.Errorf("SelectionSort %v, In fact: %v", unsort, sorted)
-	}
-}
-
 func TestShellSort(t *testing.T) {
 	sorted := make([]int, len(unsort))
 	copy(sorted, unsort)
@@ -85,5 +76,22 @@ func TestQuickSort(t *testing.T) {
 	QuickSort(sorted, 0, len(sorted)-1)
 	if !isSorted(sorted) {
 		t.Errorf("QuickSort err: In fact: %v", sorted)
+	}
+}
+
+func TestSelectionSort(t *testing.T) {
+	sorted := make([]int, len(unsort))
+	copy(sorted, unsort)
+	SelectionSort(sorted)
+	if !isSorted(sorted) {
+		t.Errorf("SelectionSort %v, In fact: %v", unsort, sorted)
+	}
+}
+func TestHeapSort(t *testing.T) {
+	sorted := make([]int, len(unsort))
+	copy(sorted, unsort)
+	HeapSort(sorted)
+	if !isSorted(sorted) {
+		t.Errorf("SelectionSort %v, In fact: %v", unsort, sorted)
 	}
 }
