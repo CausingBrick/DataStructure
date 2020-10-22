@@ -1,15 +1,17 @@
 package sort
 
 import (
-	md "math/rand"
+	"math/rand"
 	"testing"
 )
 
+//Length of unsorted array
+var arrLen = 200
 var unsort []int
 
 func init() {
-	for i := 0; i < 200; i++ {
-		unsort = append(unsort, md.Int())
+	for i := 0; i < arrLen; i++ {
+		unsort = append(unsort, rand.Int()%arrLen)
 	}
 }
 func TestIsSorted(t *testing.T) {
@@ -90,7 +92,7 @@ func TestHeapSort(t *testing.T) {
 	copy(sorted, unsort)
 	HeapSort(sorted)
 	if !isSorted(sorted) {
-		t.Errorf("SelectionSort %v, In fact: %v", unsort, sorted)
+		t.Errorf("HeapSort %v, In fact: %v", unsort, sorted)
 	}
 }
 func TestMergeSort(t *testing.T) {
@@ -98,6 +100,14 @@ func TestMergeSort(t *testing.T) {
 	copy(sorted, unsort)
 	MergeSort(sorted)
 	if !isSorted(sorted) {
-		t.Errorf("SelectionSort %v, In fact: %v", unsort, sorted)
+		t.Errorf("MergeSort %v, In fact: %v", unsort, sorted)
+	}
+}
+func TestRadixSort(t *testing.T) {
+	sorted := make([]int, len(unsort))
+	copy(sorted, unsort)
+	RadixSort(sorted)
+	if !isSorted(sorted) {
+		t.Errorf("RadixSort %v, In fact: %v", unsort, sorted)
 	}
 }

@@ -22,7 +22,7 @@ Table of Contents
             * [3.建堆](#3建堆)
             * [4.堆排序](#4堆排序)
       * [7.5 归并排序](#75-归并排序)
-      
+      * [7.6 基数排序](#76-基数排序)
 # 7 排序
 
 ## 7.1 基本概念与方法
@@ -425,3 +425,36 @@ Merging Sort是将两个或两个以上的有序表合并成为一个有序表�
   2. 可以用于链式排序
   3. 原址排序
 
+## 7.6 基数排序
+
+**Radix Sort**是一种非比较型整数排序算法，其原理是将整数按位数切割成不同的数字，然后按每个位数分别比较。由于整数也可以表达字符串（比如名字或日期）和特定格式的浮点数，所以基数排序也不是只能使用于整数。
+
+- 算法描述
+
+  ```
+  RADIX-SORT(A,d)
+  	mod = 10
+	div = 1
+  	for i = 0 to d -1
+  		let counter two-dimensional array
+  		for j = 0 to A.length-1
+  			bucket = (A[j]%mod)/div
+  			push A[j] to counter[bucket]
+  		pos = 0
+  		for i = 0 to counter.length-1
+  			for k = 0 to counter[j].length-1
+  				A[pos] = counter[j][k]
+  				pos = pos + 1
+  		div = div * 10
+  		mod = mod * 10
+  ```
+  
+- 算法分析
+
+  对于n个记录，每一次分配的时间复杂度为O(n)，收集的复杂度为O(rd), 整个排序需要进行n次收集，所以时间复杂度O(d(n+rd))，复杂度到O(n)。
+
+- 算法特点
+
+  1. 稳定排序
+  2. 可以用于链式结构和顺序结构
+  3. 使用条件严格，需要知道各级关键字的主次关系和各级关键字的取值范围

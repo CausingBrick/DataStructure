@@ -1,5 +1,7 @@
 package sort
 
+import "strconv"
+
 func isSorted(arr []int) bool {
 	for i := 0; i < len(arr)-1; i++ {
 		if arr[i] > arr[i+1] {
@@ -203,5 +205,42 @@ func merge(arr []int, left, mid, right int) {
 	for j < rSize {
 		arr[left+i+j] = rightArr[j]
 		j++
+	}
+}
+
+// RadixSort 基数排序
+func RadixSort(arr []int) {
+	if len(arr) < 2 {
+		return
+	}
+	max := arr[0]
+	for _, v := range arr {
+		if max < v {
+			max = v
+		}
+	}
+	radixSort(arr, len(strconv.Itoa(max)))
+}
+func radixSort(arr []int, maxDigit int) {
+	mod, div := 10, 1
+	for i := 0; i < maxDigit; i++ {
+		counter := make([][]int, 10)
+		//push data sorted by digit to bucket
+		for j := 0; j < len(arr); j++ {
+			bucket := (arr[j] % mod) / div
+			if len(counter[bucket]) == 0 {
+				counter[bucket] = make([]int, 0)
+			}
+			counter[bucket] = append(counter[bucket], arr[j])
+		}
+		//sort data from bucket to arr
+		for j, pos := 0, 0; j < len(counter); j++ {
+			for k := 0; k < len(counter[j]); k++ {
+				arr[pos] = counter[j][k]
+				pos++
+			}
+		}
+		div *= 10
+		mod *= 10
 	}
 }
