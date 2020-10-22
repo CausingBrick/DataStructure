@@ -1,8 +1,8 @@
 package sort
 
-func isSorted(a []int) bool {
-	for i := 0; i < len(a)-1; i++ {
-		if a[i] > a[i+1] {
+func isSorted(arr []int) bool {
+	for i := 0; i < len(arr)-1; i++ {
+		if arr[i] > arr[i+1] {
 			return false
 		}
 	}
@@ -10,45 +10,45 @@ func isSorted(a []int) bool {
 }
 
 // InsertionSort 插入排序
-// a为待排序slice的地址
-func InsertionSort(a []int) {
+// arr为待排序slice的地址
+func InsertionSort(arr []int) {
 	var j, val int
-	for i := 1; i < len(a); i++ {
-		val = a[i]
-		for j = i; j > 0 && a[j-1] > val; j-- {
-			a[j] = a[j-1]
+	for i := 1; i < len(arr); i++ {
+		val = arr[i]
+		for j = i; j > 0 && arr[j-1] > val; j-- {
+			arr[j] = arr[j-1]
 		}
-		a[j] = val
+		arr[j] = val
 	}
 }
 
 // BinaryInsertionSort 折半插入排序
-func BinaryInsertionSort(a []int) {
-	for i := 1; i < len(a); i++ {
-		val := a[i]
+func BinaryInsertionSort(arr []int) {
+	for i := 1; i < len(arr); i++ {
+		val := arr[i]
 		low, high := 0, i
 		//find location high+1 to insert val
 		for low < high {
 			mid := (low + high) / 2
-			if val < a[mid] {
+			if val < arr[mid] {
 				high = mid
 			} else {
 				low = mid + 1
 			}
 		}
 		for j := i; j > high; j-- {
-			a[j] = a[j-1]
+			arr[j] = arr[j-1]
 		}
-		a[high] = val
+		arr[high] = val
 	}
 }
 
 // BubbleSort 冒泡排序
-func BubbleSort(a []int) {
-	for i := 0; i < len(a); i++ {
-		for j := 1; j < len(a)-i; j++ {
-			if a[j] < a[j-1] {
-				a[j], a[j-1] = a[j-1], a[j]
+func BubbleSort(arr []int) {
+	for i := 0; i < len(arr); i++ {
+		for j := 1; j < len(arr)-i; j++ {
+			if arr[j] < arr[j-1] {
+				arr[j], arr[j-1] = arr[j-1], arr[j]
 			}
 		}
 	}
@@ -56,12 +56,12 @@ func BubbleSort(a []int) {
 
 // BubbleSortF flag 冒泡排序
 // 改进优化BubbleSort
-func BubbleSortF(a []int) {
+func BubbleSortF(arr []int) {
 	for flag := true; flag; {
 		flag = false
-		for i := 0; i < len(a)-1; i++ {
-			if a[i] > a[i+1] {
-				a[i], a[i+1] = a[i+1], a[i]
+		for i := 0; i < len(arr)-1; i++ {
+			if arr[i] > arr[i+1] {
+				arr[i], arr[i+1] = arr[i+1], arr[i]
 				flag = true
 			}
 		}
@@ -70,93 +70,138 @@ func BubbleSortF(a []int) {
 
 // ShellSort 希尔排序
 // gap 增量为3*gap+1
-func ShellSort(a []int) {
+func ShellSort(arr []int) {
 	// Generate incremental series for  3*i+1
 	var gap = []int{1}
-	for i := 0; 3*gap[i]+1 < len(a); i++ {
+	for i := 0; 3*gap[i]+1 < len(arr); i++ {
 		gap = append(gap, 3*gap[i]+1)
 	}
 
 	for g := len(gap) - 1; g >= 0 && gap[g] > 0; g-- {
-		for i := gap[g]; i < len(a); i++ {
-			val := a[i]
+		for i := gap[g]; i < len(arr); i++ {
+			val := arr[i]
 			j := i
-			for j >= gap[g] && a[j-gap[g]] > val {
-				a[j] = a[j-gap[g]]
+			for j >= gap[g] && arr[j-gap[g]] > val {
+				arr[j] = arr[j-gap[g]]
 				j -= gap[g]
 			}
-			a[j] = val
+			arr[j] = val
 		}
 	}
 }
 
 // QuickSort 快速排序
-func QuickSort(a []int, p, r int) {
+func QuickSort(arr []int) {
+	quickSort(arr, 0, len(arr)-1)
+}
+
+func quickSort(arr []int, p, r int) {
 	if p < r {
-		m := partition(a, p, r)
-		QuickSort(a, p, m-1)
-		QuickSort(a, m+1, r)
+		m := partition(arr, p, r)
+
+		quickSort(arr, p, m-1)
+
+		quickSort(arr, m+1, r)
 	}
 }
 
 // partition 原址排序返回一个分割
-func partition(a []int, p, r int) int {
-	val := a[r]
+func partition(arr []int, p, r int) int {
+	val := arr[r]
 	i := p - 1
 	for j := p; j < r; j++ {
-		if a[j] <= val {
+		if arr[j] <= val {
 			i++
-			a[i], a[j] = a[j], a[i]
+			arr[i], arr[j] = arr[j], arr[i]
 		}
 	}
-	a[i+1], a[r] = a[r], a[i+1]
+	arr[i+1], arr[r] = arr[r], arr[i+1]
 	return i + 1
 }
 
 // SelectionSort 选择排序
-func SelectionSort(a []int) {
-	for i := 0; i < len(a); i++ {
+func SelectionSort(arr []int) {
+	for i := 0; i < len(arr); i++ {
 		min := i
-		for j := i; j < len(a); j++ {
-			if a[min] > a[j] {
+		for j := i; j < len(arr); j++ {
+			if arr[min] > arr[j] {
 				min = j
 			}
 		}
-		a[min], a[i] = a[i], a[min]
+		arr[min], arr[i] = arr[i], arr[min]
 	}
 }
 
 // HeapSort 堆排序
-func HeapSort(a []int) {
-	heapSize := len(a)
-	buildMAXHeap(a)
+func HeapSort(arr []int) {
+	heapSize := len(arr)
+	buildMAXHeap(arr)
 	for i := heapSize - 1; i >= 0; i-- {
-		a[0], a[i] = a[i], a[0]
+		arr[0], arr[i] = arr[i], arr[0]
 		heapSize--
-		maxHeapify(a, 0, heapSize)
+		maxHeapify(arr, 0, heapSize)
 	}
 }
 
 // buildMAXHeap 将数组a做最大堆化处理
-func buildMAXHeap(a []int) {
-	heapSize := len(a)
+func buildMAXHeap(arr []int) {
+	heapSize := len(arr)
 	for i := heapSize >> 1; i >= 0; i-- {
-		maxHeapify(a, i, heapSize)
+		maxHeapify(arr, i, heapSize)
 	}
 }
 
 // maxHeapify 维护最大堆的性质
-func maxHeapify(a []int, i, heapSize int) {
+func maxHeapify(arr []int, i, heapSize int) {
 	left, right := i<<1+1, i<<1+2
 	largest := i
-	if left < heapSize && a[left] > a[largest] {
+	if left < heapSize && arr[left] > arr[largest] {
 		largest = left
 	}
-	if right < heapSize && a[right] > a[largest] {
+	if right < heapSize && arr[right] > arr[largest] {
 		largest = right
 	}
 	if largest != i {
-		a[largest], a[i] = a[i], a[largest]
-		maxHeapify(a, largest, heapSize)
+		arr[largest], arr[i] = arr[i], arr[largest]
+		maxHeapify(arr, largest, heapSize)
+	}
+}
+
+// MergeSort 归并排序
+func MergeSort(arr []int) {
+	mergeSort(arr, 0, len(arr)-1)
+}
+
+func mergeSort(arr []int, left, right int) {
+	if left < right {
+		mid := (left + right) >> 1
+		mergeSort(arr, left, mid)
+		mergeSort(arr, mid+1, right)
+		merge(arr, left, mid, right)
+	}
+}
+
+func merge(arr []int, left, mid, right int) {
+	leftArr, rightArr := make([]int, mid+1-left), make([]int, right-mid)
+	copy(leftArr, arr[left:mid+1])
+	copy(rightArr, arr[mid+1:right+1])
+	lSize, rSize := len(leftArr), len(rightArr)
+	i, j := 0, 0
+	for i < lSize && j < rSize {
+		if leftArr[i] <= rightArr[j] {
+			arr[left+i+j] = leftArr[i]
+			i++
+		} else {
+			arr[left+i+j] = rightArr[j]
+			j++
+		}
+	}
+	for i < lSize {
+		arr[left+i+j] = leftArr[i]
+		i++
+	}
+	for j < rSize {
+		arr[left+i+j] = rightArr[j]
+		j++
 	}
 }

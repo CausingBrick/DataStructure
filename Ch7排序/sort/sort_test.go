@@ -62,7 +62,6 @@ func TestBubbleSortF(t *testing.T) {
 func TestShellSort(t *testing.T) {
 	sorted := make([]int, len(unsort))
 	copy(sorted, unsort)
-	// sorted := []int{3, 5, 1, 2, 9, 7, 4, 8, 6}
 	ShellSort(sorted)
 	if !isSorted(sorted) {
 		t.Errorf("ShellSort err: In fact: %v", sorted)
@@ -72,8 +71,7 @@ func TestShellSort(t *testing.T) {
 func TestQuickSort(t *testing.T) {
 	sorted := make([]int, len(unsort))
 	copy(sorted, unsort)
-	// sorted := []int{3, 5, 1, 2, 9, 7, 4, 8, 6}
-	QuickSort(sorted, 0, len(sorted)-1)
+	QuickSort(sorted)
 	if !isSorted(sorted) {
 		t.Errorf("QuickSort err: In fact: %v", sorted)
 	}
@@ -91,6 +89,14 @@ func TestHeapSort(t *testing.T) {
 	sorted := make([]int, len(unsort))
 	copy(sorted, unsort)
 	HeapSort(sorted)
+	if !isSorted(sorted) {
+		t.Errorf("SelectionSort %v, In fact: %v", unsort, sorted)
+	}
+}
+func TestMergeSort(t *testing.T) {
+	sorted := make([]int, len(unsort))
+	copy(sorted, unsort)
+	MergeSort(sorted)
 	if !isSorted(sorted) {
 		t.Errorf("SelectionSort %v, In fact: %v", unsort, sorted)
 	}
