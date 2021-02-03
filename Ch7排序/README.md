@@ -74,7 +74,7 @@ Table of Contents
   ```
   //待排序序列A
   InsertionSort(A)
-      for i from 1 to A.length
+      for i from 1 to A.length-1
           val = A[i]
           j = i
           while j > 0 and A[j-1] > val
