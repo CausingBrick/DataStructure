@@ -6,11 +6,11 @@ const NOTFOUND = -404
 // Search 二分搜索
 func Search(key int, seq []int) int {
 	left, right := 0, len(seq)
-	mid := (left + right) / 2
 	for left < right {
+		mid := (left + right) >> 1
 		if key == seq[mid] {
 			return mid
-		} else if key < mid {
+		} else if key < seq[mid] {
 			right = mid
 		} else {
 			left = mid

@@ -4,6 +4,8 @@ import (
 	md "math/rand"
 	"testing"
 	"time"
+
+	"github.com/CausingBrick/DataStructure/Ch7排序/sort"
 )
 
 func TestSearch(t *testing.T) {
@@ -12,8 +14,9 @@ func TestSearch(t *testing.T) {
 	for i := 0; i < 10; i++ {
 		sequence1 = append(sequence1, r.Int())
 	}
-	key := sequence1[5]
-	if Search(key, sequence1) != 5 {
+	sort.QuickSort(sequence1)
+	key := sequence1[2]
+	if Search(key, sequence1) != 2 {
 		t.Errorf("fail: the index does not match")
 	}
 	t.Log(sequence1, key, Search(key, sequence1))
