@@ -224,6 +224,8 @@ func levelorderTraverse(b *BinTree, action ActionInTraverse) {
 	}
 }
 
+
+
 func main() {
 	t1 := New()
 	t1.root = &Element{nil, nil, t1, 1}
