@@ -71,7 +71,7 @@ func TestRemove(t *testing.T) {
 	if bst.Remove(1, lessInt); bst.Search(2, lessInt).Left() != nil {
 		t.Errorf("error remove: %d", 1)
 	}
-	//test remove 
+	//test remove
 	if bst.Remove(2, lessInt); bst.Element != nil {
 		t.Errorf("error remove: %d", 2)
 	}
@@ -81,7 +81,7 @@ func TestRemove(t *testing.T) {
 	}
 	// test remove nil
 	if bst.Remove(5, lessInt); bst.Element != nil {
-		t.Errorf("error remove: %d", 2)
+		t.Errorf("error remove: %d", 5)
 	}
 
 	bst.Insert(2, lessInt)

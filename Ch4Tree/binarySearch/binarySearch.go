@@ -54,7 +54,7 @@ func (b *BinarySearch) Insert(v interface{}, less func(i, j interface{}) bool) *
 
 func (b *BinarySearch) Search(v interface{}, less func(i, j interface{}) bool) *Element {
 	e := b.Element
-	for e != nil && e.Value.(int) != v.(int) {
+	for e != nil && e.Value != v {
 		if less(v, e.Value) {
 			e = e.left
 		} else {
@@ -66,7 +66,7 @@ func (b *BinarySearch) Search(v interface{}, less func(i, j interface{}) bool) *
 
 func (b *BinarySearch) Remove(v interface{}, less func(i, j interface{}) bool) *Element {
 	p, e := b.Element, b.Element
-	// find e and parent p
+	// find e and its parent p
 	for e != nil && e.Value != v {
 		p = e
 		if less(v, e.Value) {
@@ -76,57 +76,56 @@ func (b *BinarySearch) Remove(v interface{}, less func(i, j interface{}) bool) *
 		}
 	}
 	// remove e
+	// empty tree or e not found.
 	switch {
 	case e == nil:
-		// empty tree
 		break
-	case e == b.Element:
-		b.Element = nil
-	case e.left != nil && e.right != nil:
-		// left and right subtrees exist
-		s, ps := e, e
-		// find the max element s in left subtree
-		for s.left != nil && s.right != nil {
-			ps = s
-			if s.right != nil {
-				s = s.right
-			} else {
-				s = s.left
-			}
+	// e is leaf node.
+	case e.left == nil && e.right == nil:
+		// just root node exists.
+		if b.Element == e {
+			b.Element = nil
+			break
 		}
-		// remove s form subtree
-		if s == ps.left {
-			ps.left = nil
-		} else {
-			ps.right = nil
-		}
-		// replace e with s
-		s.left, s.right = e.left, e.right
-		if e == p.left {
-			p.left = s
-		} else {
-			p.right = s
-		}
-
-	case e.left != nil:
-		if p.left == e {
-			p.left = e.left
-		} else {
-			p.right = e.left
-		}
-	case e.right != nil:
-		if p.left == e {
-			p.left = e.right
-		} else {
-			p.right = e.right
-		}
-	default:
 		if p.left == e {
 			p.left = nil
 		} else {
 			p.right = nil
 		}
-
+	// just left node exists.
+	case e.left != nil && e.right == nil:
+		if p.left == e {
+			p.left = e.left
+		} else {
+			p.right = e.left
+		}
+	// just right node exists.
+	case e.left == nil && e.right != nil:
+		if p.left == e {
+			p.left = e.right
+		} else {
+			p.right = e.right
+		}
+	// left and right subtrees are existed.
+	default:
+		// use the pre node in inorder traverse to replace the e.
+		pre, ppre := e.left, e
+		for pre.right != nil {
+			ppre = pre
+			pre = pre.right
+		}
+		if pre != ppre {
+			if ppre.left == pre {
+				ppre.left = nil
+			} else {
+				ppre.right = nil
+			}
+		}
+		if p.left == e {
+			p.left = pre
+		} else {
+			p.right = pre
+		}
 	}
 	if e != nil {
 		e.left, e.right = nil, nil // avoid memory leaks
