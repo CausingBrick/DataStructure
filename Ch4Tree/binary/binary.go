@@ -65,7 +65,7 @@ func depth(e *Element) int {
 	}
 }
 
-// PreorderTraverse
+// PreorderTraverse visit element with recursive pre-order
 func (b *BinTree) PreorderTraverse(visit func(e *Element)) {
 	preorderTraverse(&b.Element, visit)
 }
