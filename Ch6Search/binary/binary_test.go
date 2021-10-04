@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/CausingBrick/DataStructure/Ch7排序/sort"
+	"github.com/CausingBrick/DataStructure/Ch7Search/sort"
 )
 
 func TestSearch(t *testing.T) {
