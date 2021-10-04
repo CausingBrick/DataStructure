@@ -1,10 +1,13 @@
 package sort
 
-import "strconv"
+import (
+	"container/list"
+	"strconv"
+)
 
-func isSorted(arr []int) bool {
-	for i := 0; i < len(arr)-1; i++ {
-		if arr[i] > arr[i+1] {
+func isSorted(data []int) bool {
+	for i := 0; i < len(data)-1; i++ {
+		if data[i] > data[i+1] {
 			return false
 		}
 	}
@@ -97,28 +100,26 @@ func QuickSort(arr []int) {
 	quickSort(arr, 0, len(arr)-1)
 }
 
-func quickSort(arr []int, p, r int) {
-	if p < r {
-		m := partition(arr, p, r)
-
-		quickSort(arr, p, m-1)
-
+func quickSort(arr []int, l, r int) {
+	if l < r {
+		m := partition(arr, l, r)
+		quickSort(arr, l, m-1)
 		quickSort(arr, m+1, r)
 	}
 }
 
 // partition 原址排序返回一个分割
-func partition(arr []int, p, r int) int {
-	val := arr[r]
-	i := p - 1
-	for j := p; j < r; j++ {
-		if arr[j] <= val {
-			i++
+func partition(arr []int, l, r int) int {
+	pivot := arr[r]
+	i := l
+	for j := l; j < r; j++ {
+		if arr[j] <= pivot {
 			arr[i], arr[j] = arr[j], arr[i]
+			i++
 		}
 	}
-	arr[i+1], arr[r] = arr[r], arr[i+1]
-	return i + 1
+	arr[i], arr[r] = arr[r], arr[i]
+	return i
 }
 
 // SelectionSort 选择排序
@@ -147,25 +148,25 @@ func HeapSort(arr []int) {
 
 // buildMAXHeap 将数组a做最大堆化处理
 func buildMAXHeap(arr []int) {
-	heapSize := len(arr)
-	for i := heapSize >> 1; i >= 0; i-- {
-		maxHeapify(arr, i, heapSize)
+	for i := len(arr) >> 1; i >= 0; i-- {
+		maxHeapify(arr, i, len(arr))
 	}
 }
 
 // maxHeapify 维护最大堆的性质
 func maxHeapify(arr []int, i, heapSize int) {
-	left, right := i<<1+1, i<<1+2
-	largest := i
-	if left < heapSize && arr[left] > arr[largest] {
-		largest = left
+	left, right := i<<1, i<<1+1
+	max := i
+	if left < heapSize && arr[left] > arr[max] {
+		max = left
 	}
-	if right < heapSize && arr[right] > arr[largest] {
-		largest = right
+	if right < heapSize && arr[right] > arr[max] {
+		max = right
 	}
-	if largest != i {
-		arr[largest], arr[i] = arr[i], arr[largest]
-		maxHeapify(arr, largest, heapSize)
+	list.New()
+	if max != i {
+		arr[max], arr[i] = arr[i], arr[max]
+		maxHeapify(arr, max, heapSize)
 	}
 }
 
@@ -187,9 +188,8 @@ func merge(arr []int, left, mid, right int) {
 	leftArr, rightArr := make([]int, mid+1-left), make([]int, right-mid)
 	copy(leftArr, arr[left:mid+1])
 	copy(rightArr, arr[mid+1:right+1])
-	lSize, rSize := len(leftArr), len(rightArr)
 	i, j := 0, 0
-	for i < lSize && j < rSize {
+	for i < len(leftArr) && j < len(rightArr) {
 		if leftArr[i] <= rightArr[j] {
 			arr[left+i+j] = leftArr[i]
 			i++
@@ -198,11 +198,11 @@ func merge(arr []int, left, mid, right int) {
 			j++
 		}
 	}
-	for i < lSize {
+	for i < len(leftArr) {
 		arr[left+i+j] = leftArr[i]
 		i++
 	}
-	for j < rSize {
+	for j < len(rightArr) {
 		arr[left+i+j] = rightArr[j]
 		j++
 	}

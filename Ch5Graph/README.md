@@ -807,9 +807,9 @@ TopologicalSort(G, topo[])
 		if !indegree[i]
 			S.push(i)
 	outvexnum = 0
-	while !s.Empty()
+	while !S.IsEmpty()
 		i = S.pop()
-		topo[m++] = i
+		topo[outvexnum++] = i
 		p=G.vertices[i].firstarc
 		while p!=null
 			k = p.adjvex
@@ -908,10 +908,10 @@ CriticalPath(G)
 	if !TopologicalSort(G, topo)
 		return ERROR
 	n = G.vexnum
-    for i=0 to n
+    for i=0 to n -1
     	ve[i] = 0
     //求出ve
-    for i=0 to n	
+    for i=0 to n -1	
 		k = topo[i]
 		p = G.vertices[k].firstarc
 		while p!=null
@@ -920,7 +920,7 @@ CriticalPath(G)
 				ve[j] = ve[k]+p.weight
 			p = p.nextarc
 	//求出vl
-	for i=0 to n	
+	for i=0 to n -1	
 		vl[i] = ve[n-1]
 	for i=n-1 to 0	
 		k = topo[i]
@@ -931,7 +931,7 @@ CriticalPath(G)
 				vl[k] = vl[j]-p.weight 
 			p = p.nextarc
 	//判断是否为关键活动
-	for i=0 to n
+	for i=0 to n -1
         p = G.vertices[i].fistarc
         while p!=null
             j = p.adjvex
